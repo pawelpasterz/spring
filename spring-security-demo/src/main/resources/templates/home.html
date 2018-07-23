@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>HOME PAGE</title>
+</head>
+<body>
+<h1>Home Page</h1>
+<hr/>
+<br/>
+<div>
+  There will be some content...
+</div>
+<br/><br/>
+<p sec:authorize="hasRole('MANAGER')">
+  <a th:href="@{/leaders}">Leadership Meeting</a>
+  (Only for Managers)
+</p>
+<p sec:authorize="hasRole('ADMIN')">
+  <a th:href="@{/systems}">Administration Meeting</a>
+  (Only for Admins)
+</p>
+<br/><br/>
+<div>
+  User: <span sec:authentication="name">NOT FOUND</span><br/>
+  Spring Roles: <span sec:authentication="principal.authorities">NOT FOUND</span>
+</div>
+<br/><br/>
+<div sec:authorize="hasRole('ADMIN')">
+  This content is only shown to administrators.
+</div>
+<br/><br/>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="Logout"/>
+</form>
+</body>
+</html>
