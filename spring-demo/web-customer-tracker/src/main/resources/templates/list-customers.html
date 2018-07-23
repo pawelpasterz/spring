@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" th:href="@{/css/add-customer-style.css}"/>
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <title>Customers List</title>
+</head>
+<body>
+<div id="wrapper">
+  <div id="header">
+    <h2>CRM -- Customer Relationship Manager</h2>
+  </div>
+</div>
+<div id="container">
+  <div id="content">
+    <form action="search" th:action="@{/customer/search}" method="post">
+      Search customer:<input type="text" name="firstNameToSearch"/>
+      <input type="submit" value="Search" class="add-button">
+    </form>
+    <input type="button" value="Add Customer"
+           onclick="location.href='/customer/showFormForAdd'" class="add-button"/>
+    <input type="button" value="Show all"
+           onclick="location.href='/customer/list'" class="add-button"/>
+    <table>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>E-mail</th>
+        <th>Update</th>
+      </tr>
+      <tr th:each="customer : ${customers}">
+        <td th:text="${customer.firstName}">1</td>
+        <td th:text="${customer.lastName}">Doe</td>
+        <td th:text="${customer.email}">John</td>
+        <td>
+          <a th:href="@{|/customer/showFormForUpdate?id=${customer.id}|}">Update</a> |
+          <a th:href="@{|/customer/delete?id=${customer.id}|}"
+             onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false;">
+            Delete
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
